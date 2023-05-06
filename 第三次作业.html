@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{box-sizing: border-box;}
+        .header,.footer{
+            background-color:rgb(146, 155, 152);
+            color: antiquewhite;
+            padding: 25px
+        }
+        .header{
+            background-color: rgb(146, 155, 152);
+            text-align: left;
+            font-size: 25px;
+        }
+        .topnav{
+            background-color: rgb(7, 6, 5);
+            margin: 5px;
+            padding: 0%;
+            list-style-type: none;
+            font-size: 25px;
+            overflow: hidden;
+            font-weight: bold;
+        }
+        .topnav a{
+            float: left;
+            display: block;
+            color: rgb(243, 243, 244);
+            text-align: center;
+            padding: 12px 14px;
+            text-decoration: none;
+        }
+        .topnav a:hover{
+            background-color: rgb(240, 17, 17);
+            color: aqua;
+        }
+        .column{
+            float: left;
+            padding: 10px;
+        }
+        .clearfix::after{
+            clear: both;
+            display: table;
+        }
+        .menu{
+            width: 25%;
+        }
+        .content{
+            width: 75%;
+        }
+        .menu ul{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .menu li {
+            background-color: rgb(134, 134, 228);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .footer{
+            background-color: rgb(146, 155, 152);
+            text-align: left;
+            font-size: 25px;
+            margin-top: 45%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Chania</h1>
+    </div>
+
+    <div class="topnav">
+        <a href="#">Home</a>
+        <a href="#">News</a>
+        <a href="#">Contact</a>
+        <a href="#">About</a>
+    </div>
+
+    <div class="clearfix">
+        <div class="column menu">
+            <ul>
+                <li>The Flight</li>
+                <li>The City</li>
+                <li>The Island</li>
+                <li>The Food</li>
+                </ul>
+        </div>
+        <div class="column content">
+        <h1>The City</h1>
+        <p>Chania is the capital of the Chania region on the island of Crete</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Footer Text</p>
+    </div>
+</body>
+</html>
