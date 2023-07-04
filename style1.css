@@ -1,0 +1,352 @@
+/* 全局 */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+/* Wrapper */
+#wrapper {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0px;
+  display: flex;
+}
+
+/* Main 部分！！*/
+#main {
+  left: 0px;
+  width: 74%;
+  background-color: #ef9292;
+  padding: 10px;
+}
+
+  #main.inner {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* 第一部分 */
+    /* Header */
+    #header {
+      margin: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header a {
+      color: #ef9292;
+      text-decoration: underline;
+    }
+
+    #header a:hover {
+      color: #9b6060;
+    }
+
+    .logo {
+      font-size: 24px;
+      background-color: #adc5e8;
+    }
+
+    /* Icon */
+    .icons {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .icons li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    /* Link */
+    .icons a {
+      color: #c54545;
+      display: block;
+      height: 80px;
+      width: 80px;
+      line-height: 80px;
+      text-align: center;
+      border-radius: 15px 50px;
+      background-color: #f7f3f3;
+    }
+
+    /* Label */
+    .icons .label {
+      display:  block;
+    }
+
+  /* 第二部分 */
+    /* Banner */
+    #banner {
+      background-color: #e8e5ad;
+      text-align: center;
+      position: relative;
+      margin: 20px;
+    }
+
+    #banner .content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #banner h1 {
+      background-color: #adc5e8;
+      font-size: 30px;
+      line-height: 1.2;
+      margin-bottom: 22px;
+    }
+
+    #banner p {
+      color: #c54545;
+      display: block;
+      text-align: center;
+      border-radius: 15px 50px;
+      background-color: #f7f3f3;
+      font-size: 15px;
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    #banner .actions {
+      margin-top: 20px;
+      float: left;
+    }
+
+    #banner .button {
+      display: inline-block;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    #banner .button:hover {
+      background-color: #555;
+    }
+
+    #banner .image {
+      position: relative;
+    }
+
+  /* 第三部分 */
+    /* Features */
+    .major{
+      background-color: #adc5e8;
+      padding: 0px;
+      text-align: center;
+      position: relative;
+      font-size: 20px;
+      margin: 20px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background-color: #e8e5ad;
+      margin: 20px;
+      padding: 20px;
+    }
+
+    .features article {
+      background-color: #f9f9f9;
+      border-radius: 15px 50px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .features article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .features article h3 {
+      color: #030303;
+      font-size: 20px;
+    }
+
+    .features article p {
+      color: #c54545;
+      font-size: 15px;
+    }
+
+  /* 第四部分 */
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 5px;
+      text-align: center;
+      background-color: #e8e5ad;
+      margin: 20px;
+      padding: 20px;
+      margin-bottom: 60px;
+    }
+
+    .posts article {
+      background-color: #f7f3f3;
+      padding: 10px;
+    }
+
+    .posts article .image {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .posts article .image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .posts article .image:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图像 */
+    }
+
+    .posts article h3 {
+      color: #030303;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .posts article p {
+      color: #c54545;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .posts article .actions {
+      list-style-type: none;
+      margin: 10px;
+      padding: 0;
+    }
+
+    .posts article .actions li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .posts article .actions li:last-child {
+      margin-right: 0;
+    }
+
+    .posts article .button {
+      display: inline-block;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .posts article .button:hover {
+      background-color: #555; 
+    }
+
+
+/* Sidebar 部分！！*/
+  #sidebar {
+    position: fixed;
+    right: 0px;
+    width: 21%;
+    background-color: #a7d5a8;
+    padding: 20px;
+    height: 100%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+
+  #sidebar .inner {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Search */
+    #search input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Menu */
+    #menu ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #menu li {
+      margin-bottom: 10px;
+      background-color: #f7f3f3;
+      text-align: center;
+      color: #c54545;
+      padding: 10px
+    }
+
+    #menu a {
+      color: #c54545;
+      text-decoration: underline;
+    }
+
+    #menu a:hover {
+      color: #777;
+    }
+
+  /* Section */
+    section {
+      margin-bottom: 20px;
+    }
+
+    section h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    section p {
+      margin-bottom: 10px;
+      background-color: #f7f3f3;
+      border-radius: 5px;
+      text-align: center;
+      color: #c54545;
+      padding: 10px
+    }
+
+    section .contact li {
+      margin-bottom: 10px;
+    }
+
+    section .envelope a,
+    section .phone {
+      color: #555;
+    }
+
+    section .home {
+      color: #888;
+    }
+
+  /* Footer */
+    #footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #333;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    #footer a {
+      color: #fff;
+    }
+
+    #footer a:hover {
+      color: #bbb;
+    }
