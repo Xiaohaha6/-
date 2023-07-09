@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 500px;
+            border: 1px solid red;
+            background: url('背景.jpg');
+            background-size: cover;
+        }
+
+        #game-area {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);  
+        }
+
+        button {
+            border: none;
+            background-image: linear-gradient(rgb(209, 223, 133), rgb(215, 106, 195)); /* 绿色 */
+            color: white; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px; 
+            cursor: pointer; 
+        }
+
+        #score, #timer {
+            position: fixed; 
+            top: 0; 
+            padding: 10px; 
+            background-color: #333; 
+            color: white; 
+        }
+
+        #timer {
+            right: 0;
+       }
+
+        #game-intro {
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 16px; 
+            text-align: justify; 
+            line-height: 1.5; 
+            padding: 20px; 
+            background-image: linear-gradient(rgb(182, 182, 233), white); 
+            border-radius: 10px; 
+        }
+
+        #audio-id {
+            display: none;
+        }
+
+        #bg-music {
+            display: none;
+        }
+
+        .active {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: black;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time: 3:00</div>
+    <div id="game-area">
+        <button id="start">开始</button>
+        <button id="pause">暂停</button>
+        <button id="end">结束</button>
+        <audio id="bg-music" src="http://music.163.com/song/media/outer/url?id=1391211269.mp3" controls loop></audio>
+        <audio id="eliminate-sound" src="./短音效.MP3"></audio>
+        <div id="game-intro">
+            <h2>游戏介绍</h2>
+            <p>这是一个简单的打字游戏。字母会从屏幕顶部掉落，在它们到达底部之前，点击对应的键盘可以消除它们获得分数。游戏持续3分钟。尽量获得最高的分数！</p>
+        </div>
+    <script>
+        class Game {
+            constructor(name) {
+                this.gather = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+                this.rank = 0;
+                this.spendArr = [1300, 1100, 800, 400, 100, ]
+                this.spend = this.spendArr[this.rank]
+                this.left = null
+                this.top = 0;
+                this.id = 0;
+                this.initGather = [];
+                this.score = 0;
+                this.timer = 180; // 3 minutes in seconds
+                this.status = 'stopped';
+                this.intervalId = null; 
+                this.updateIntervalId = null;
+                
+                this.init();
+                this.updateScore();
+                this.updateTimer();
+            }
+
+            init() {
+                const that = this;
+                this.intervalId = setInterval(function () {
+                    if (that.status !== 'running') return;
+                    that.left = parseInt(Math.random(Math.round() * 10) * 1000);
+                    let count = Math.round(Math.random() * 25);
+                    let newDiv = document.createElement("div");
+                    newDiv.className = "active";
+                    newDiv.id = that.id;
+                    newDiv.style.left = that.left + "px";
+                    newDiv.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+                    newDiv.innerText = that.gather[count];
+                    that.initGather.push(newDiv.id);
+                    let initGatherLength = that.initGather.length;
+                    if (initGatherLength % 1 === 0) {
+                        that.rank++;
+                    }
+                    document.body.appendChild(newDiv);
+                    that.land(newDiv);
+                    that.KDown(newDiv);
+                    that.id++;
+                }, that.spend);
+            }
+            
+            land(newDiv) {
+                const topDiv = newDiv;
+                let top = 0;
+                const that = this;
+                const timer = setInterval(function () {
+                    if (that.status !== 'running') return;
+                    top++;
+                    topDiv.style.top = top + 'px';
+                    let docDiv = document.getElementById(topDiv.id);
+                    if (docDiv != null && top >= 450) {
+                        that.initGather.splice(0, 1);
+                        console.log(that.initGather.length);
+                        newDiv.parentNode.removeChild(newDiv);
+                        clearInterval(timer);
+                    }
+                }, 10);
+            }
+
+            KDown(newDiv) {
+                if (!newDiv || !newDiv.parentNode) {
+                    console.error('newDiv or newDiv.parentNode is null');
+                    return;
+                }
+                const that = this;
+                const letter = newDiv.innerText;
+                this.keyHandler = function (e) {
+                    if (e.key.toUpperCase() === letter) {
+                        const divIndex = that.initGather.findIndex((id) => id === newDiv.id);
+                        document.getElementById('eliminate-sound').play();
+                        if (divIndex !== -1) {
+                            that.initGather.splice(divIndex, 1);
+                            newDiv.parentNode.removeChild(newDiv);
+                            that.score++;
+                            that.updateScore();
+                        }
+                    }
+                };
+                document.addEventListener('keydown', this.keyHandler); 
+            }
+
+            updateScore() {
+                const scoreDiv = document.getElementById('score');
+                scoreDiv.innerText = `Score: ${this.score}`;
+            }
+
+            updateTimer() {
+                const timerDiv = document.getElementById('timer');
+                this.updateIntervalId = setInterval(() => {
+                    if (this.status !== 'running') {
+                        return;
+                    }
+                    this.timer--;
+                    const minutes = Math.floor(this.timer / 60);
+                    const seconds = this.timer % 60;
+                    timerDiv.innerText = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    if (this.timer <= 0) {
+                        clearInterval(this.updateIntervalId);
+                        this.gameOver();
+                    }
+                }, 1000);
+            }
+
+            reset() {
+                clearInterval(this.updateIntervalId); 
+                this.updateIntervalId = null;
+                this.status = 'stopped';
+                this.score = 0;
+                this.timer = 180;
+                clearInterval(this.intervalId);
+                document.removeEventListener('keydown', this.keyHandler);
+                this.updateScore();
+
+                // Remove all letters from the page
+                this.initGather.forEach((id) => {
+                    const div = document.getElementById(id);
+                    if (div) {
+                        div.parentNode.removeChild(div);
+                    }
+                });
+                this.initGather = [];
+            }
+
+            start() {
+                if (this.status === 'stopped') {
+                    this.status = 'running';
+                    let bgMusic = document.getElementById('bg-music');
+                    bgMusic.currentTime = 3.5; 
+                    bgMusic.play();
+                    if (!this.updateIntervalId) {
+                        this.updateIntervalId = setInterval(() => this.updateTimer(), 1000);
+                    }
+                }
+            }
+
+            pause() {
+                this.status = 'paused';
+                document.getElementById('bg-music').pause();
+                let userChoice = confirm("你想继续游戏吗？点击确定继续，取消重新开始。");
+                if (userChoice) {
+                    this.status = 'running';
+                    document.getElementById('bg-music').play(); 
+                } else {
+                    location.reload(); 
+                }
+            }
+
+            end() {
+                this.status = 'stopped';
+                document.getElementById('bg-music').pause();
+                clearInterval(this.intervalId); 
+                alert(`游戏结束！你的得分是：${this.score}`);
+                this.reset();
+                location.reload(); 
+            }
+
+            gameOver() {
+                alert(`游戏结束！你的得分是：${this.score}`);
+                this.end();
+            }
+        }
+
+        const game = new Game();
+
+        document.getElementById('start').addEventListener('click', () => game.start());
+        document.getElementById('pause').addEventListener('click', () => game.pause());
+        document.getElementById('end').addEventListener('click', () => game.end());
+    </script>
+</body>
+
+</html>
